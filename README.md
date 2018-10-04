@@ -17,7 +17,7 @@ rmarkdown::render("vignettes/coxrt-vignette.Rmd")
 The  `coxrt` package can be installed by
 ```{r}
 install.packages("devtools")
-devtools::install_github(“Bella2001/coxrt”)
+devtools::install_github("Bella2001/coxrt")
 ```
  
  
