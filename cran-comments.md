@@ -7,9 +7,11 @@ On both platforms there were no ERRORs or WARNINGs.
 
 In Windows there were 2 NOTEs:
 * checking top-level files ... NOTE Non-standard file/directory found at top level:   'coxrt.pdf'
+
 Explanation: 'coxrt.pdf' is a package reference manual - I do not know where to put it.
 
 * checking compiled code ... NOTE File 'coxrt/libs/x64/coxrt.dll': Found no calls to: 'R_registerRoutines', 'R_useDynamicSymbols'
+
 Explanation: I use 'useDynLib(coxrt, .registration = TRUE)' in NAMESPACE file, but for some reason it does not remove this NOTE.
 
 
