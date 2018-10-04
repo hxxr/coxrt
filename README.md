@@ -6,11 +6,7 @@ in Vakulenko-Lagun, Mandel, and Betensky,
 *Inverse-Probability-Weighting Methods for Cox Regression with Right Truncated Data* (submitted to *Biometrics*, 2018).
 
 The `coxrt` package provides two functions: `coxph.RT` that assumes positivity and
-`coxph.RT.a0` that allows for adjustment of estimation under violation of positivity. The
-illustrative examples in these functions include analysis of AIDS latency data with age as a
-covariate, where the AIDS cases were retrospectively ascertained at June 30, 1986, and only
-those who developed AIDS by that time were included in the analysis (Kalbfeisch and Lawless,
-1989). 
+`coxph.RT.a0` that allows for adjustment of estimation under violation of positivity. 
 
 The  `coxrt` package can be installed by
 ```{r}
