@@ -18,7 +18,7 @@ The  `coxrt` package can be installed by
 ```{r}
 devtools::install_github("Bella2001/coxrt")
 ```
- 
+The examples of when and how to use `coxrt` package are [here](https://bella2001.github.io/coxrt/).
  
  
  
