@@ -10,10 +10,8 @@ The `coxrt` package provides two functions: `coxph.RT` that assumes positivity a
 illustrative examples in these functions include analysis of AIDS latency data with age as a
 covariate, where the AIDS cases were retrospectively ascertained at June 30, 1986, and only
 those who developed AIDS by that time were included in the analysis (Kalbfeisch and Lawless,
-1989). For examples we refer to the package vignette:
-```{r}
-rmarkdown::render("vignettes/coxrt-vignette.Rmd")
-```
+1989). 
+
 The  `coxrt` package can be installed by
 ```{r}
 devtools::install_github("Bella2001/coxrt")
