@@ -95,7 +95,7 @@ s$T[s$T==0] <- 0.5 # as in Kalbfeisch and Lawless (1989)
 
 # analysis assuming positivity
 # we request bootstrap SE estimate as well:
-sol <- coxph.RT(T~ageg, right=R, data=s, bs=TRUE, nbs.rep=500)
+sol <- coxph.RT(T~ageg, right=R, data=s, bs=TRUE, nbs.rep=300)
 sol
 sol$summary # print the summary of fit based on the analytic Asymptotic Standard Error estimate
 sol$bs$summary # print the summary of fit based on the bootstrap sample distribution
