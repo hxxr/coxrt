@@ -30,38 +30,35 @@ The default level is 0.95.}
 \value{
 a list with components:
 \tabular{ll}{
-\code{convergence} \tab convergence code as returned by \code{BBsolve{BB}}.
-\code{convergence} > 0 means that the algorithm diverged and a solution was not found.
-\code{BBsolve} is used with a default parameters setting. \cr
+\code{convergence} \tab convergence code as returned by \code{\link[BB:BBsolve]{BBsolve}}. \cr
+\tab \code{convergence} > 0 means that the algorithm diverged and a solution was not found. \cr
+\tab \code{BBsolve} is used with a default parameters setting. \cr
 \code{coef} \tab a vector of estimated regression coefficients. \cr
-\code{var} \tab covariance matrix of regression coefficients, if the input argument \code{bs}
-was \code{TRUE}; \code{NULL}, otherwise. \cr
+\code{var} \tab covariance matrix of regression coefficients, if the input argument \code{bs} was \code{TRUE};\cr
+\tab  \code{NULL}, otherwise. \cr
 \code{n} \tab the number of observations used to fit the model. \cr
 \code{a0} \tab plugged-in value of \code{a0}. \cr
-
-\code{bs} \tab if the input argument \code{bs} was TRUE, then an output list also includes
-an element \code{bs} with statistics from the bootstrap distribution of estimated coefficients:\cr
-\tab \itemize{
+\code{bs} \tab if the input argument \code{bs} was TRUE, then an output list also includes an element \code{bs}\cr
+ \tab  with statistics from the bootstrap distribution of estimated coefficients:\cr}
+\itemize{
 \item{\code{num.bs.rep}}
 number of successful bootsrap replications used to obtain the sample distribution
 \item{\code{var}} estimated variance of regression coefficients
 \item{\code{summary}} a data frame with a summary
 of bootstrap distribution that includes:
-
- \tabular{ll}{
- \code{SE} \tab bootstrap estimated standard error\cr
- \code{CI.L} \tab quantile estimated lower confidence limit
- for two-sided hypothesis \out{H<sub>0</sub>:} \eqn{\beta}\out{<sub>i</sub>} = 0\cr
- \code{CI.U} \tab quantile estimated upper confidence limit for two-sided hypothesis
-\out{H<sub>0</sub>:} \eqn{\beta}\out{<sub>i</sub>} = 0\cr
-\code{CI.L.H1.b.gr0} \tab
+ \code{coef}, a vector of estimated regression coefficients;
+ \code{exp.coef}, an exponent of regression coefficients (=hazard ratio);
+ \code{SE}, a bootstrap estimated standard error;
+ \code{CI.L}, a quantile estimated lower confidence limit
+ for two-sided hypothesis \ifelse{html}{\out{H<sub>0</sub>:}}{\eqn{H_0}:} \ifelse{html}{\eqn{\beta}\out{<sub>i</sub>} = 0}{\eqn{\beta_i=0}};
+ \code{CI.U}, a quantile estimated upper confidence limit for two-sided hypothesis
+\ifelse{html}{\out{H<sub>0</sub>:}}{\eqn{H_0}:} \ifelse{html}{\eqn{\beta}\out{<sub>i</sub>} = 0}{\eqn{\beta_i=0}};
+\code{CI.L.H1.b.gr0}, a
 quantile estimated the limit for one-sided hypothesis
-\out{H<sub>0</sub>:} \eqn{\beta}\out{<sub>i</sub>}\eqn{\le 0}\cr
-\code{CI.U.H1.b.le0} \tab
+\ifelse{html}{\out{H<sub>0</sub>:}}{\eqn{H_0}:} \ifelse{html}{\eqn{\beta}\out{<sub>i</sub>}\eqn{\le 0}}{\eqn{\beta_i\le 0}};
+\code{CI.U.H1.b.le0}, a
 quantile estimated the limit for one-sided hypothesis
-\out{H<sub>0</sub>:} \eqn{\beta}\out{<sub>i</sub>}\eqn{\ge 0}\cr } } \cr
-\tab If an input argument \code{bs} was FALSE,  the return field \code{bs} will be NULL. \cr
-}
+\ifelse{html}{\out{H<sub>0</sub>:}}{\eqn{H_0}:} \ifelse{html}{\eqn{\beta}\out{<sub>i</sub>}\eqn{\ge 0}}{\eqn{\beta_i\ge 0}}. }
 }
 \description{
 Estimates covariate effects in a Cox proportional hazard regression from
@@ -71,7 +68,7 @@ right truncated survival data for a given value of \code{a0=P(lifetime>max(right
   where all the covariates are zero. Right truncation might result
   in a completely unobserved right tail of the distribution of the target lifetime.
   That means that it can happen there will be no "representatives" in a sample
-  from the right tail.  Ignoring this and using \code{\link{coxph.RT}{coxph.RT}}
+  from the right tail.  Ignoring this and using \code{\link{coxph.RT}} in general
   will result in biased estimation of regression coefficients, whereas
   \code{coxph.RT.a0} allows to account for this violation.
 }
@@ -125,5 +122,5 @@ p + xlab(expression( paste(a[0], "=P(T>", r['*']," | z=0)" , sep="")) )+
 
 }
 \seealso{
-\code{\link{coxph.RT}}, \code{\link[BB]{BBsolve}}
+\code{\link{coxph.RT}}, \code{\link[BB:BBsolve]{BBsolve}}
 }

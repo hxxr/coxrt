@@ -12,7 +12,7 @@
 
 <meta name="author" content="Bella Vakulenko-Lagun, Micha Mandel and Rebecca A. Betensky" />
 
-<meta name="date" content="2018-10-04" />
+<meta name="date" content="2018-10-05" />
 
 <title>Cox Regression for Right Truncated Data</title>
 
@@ -70,7 +70,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">Cox Regression for Right Truncated Data</h1>
 <h4 class="author"><em>Bella Vakulenko-Lagun, Micha Mandel and Rebecca A. Betensky</em></h4>
-<h4 class="date"><em>2018-10-04</em></h4>
+<h4 class="date"><em>2018-10-05</em></h4>
 
 
 
@@ -231,7 +231,7 @@ knitr<span class="op">::</span><span class="kw">kable</span>(sol<span class="op"
 </tbody>
 </table>
 <p>Technically, for point estimation <code>coxph.RT</code> uses the standard <code>coxph</code> function from the <code>survival</code> package. However, the estimator of the standard error (SE) obtained from <code>coxph</code> even with <code>robust</code> option might underestimate for small sample sizes (<span class="math inline">\(n&lt;1000\)</span>). Although <code>coxph.RT</code> includes both analytic and bootstrap estimates of a SE, the inference based on the analytic SE estimate, implemented in <code>coxph.RT</code>, is more reliable than based on its bootstrap counterpart, since bootstrap resampling does not always capture the variability in data that comes from near-zero sampling probabilities <span class="math inline">\(P(R&gt;T_i)\)</span>.</p>
-<p>Since the Inverse-Probability-Weighting (IPW) approach, implemented in <code>coxrt</code>, relies on “blowing up” the sampled lifetimes <span class="math inline">\(T_i\)</span> in order to obtain the pseudo-population, which should recreate the same probability law as in the original population, <code>coxph.RT</code> is meant to fail in case there is an unobservable right tail of the distribution. Hence the function <code>coxph.RT.a0</code> aims to adjust for this violation of positivity by using the structural assumption of the Cox model in the population and the information on <span class="math inline">\(a_0=P(T&gt;r_*\mid Z=0)\)</span>.</p>
+<p>Since the Inverse-Probability-Weighting (IPW) approach, implemented in <code>coxrt</code>, relies on “blowing up” the sampled lifetimes <span class="math inline">\(T_i\)</span> in order to obtain the pseudo-population, which should recreate the same probability law as in the original population, <code>coxph.RT</code> in general will give biased estimators in case there is an unobservable right tail of the distribution. Hence the function <code>coxph.RT.a0</code> aims to adjust for this violation of positivity by using the structural assumption of the Cox model in the population and the information on <span class="math inline">\(a_0=P(T&gt;r_*\mid Z=0)\)</span>.</p>
 </div>
 <div id="without-positivity-use-coxph.rt.a0" class="section level3">
 <h3>Without positivity use <code>coxph.RT.a0</code></h3>
@@ -293,7 +293,7 @@ start_time &lt;-<span class="st"> </span><span class="kw">Sys.time</span>()
 }
 end_time &lt;-<span class="st"> </span><span class="kw">Sys.time</span>()
 end_time <span class="op">-</span><span class="st"> </span>start_time <span class="co"># It takes some time to solve nonlinear estimating equations and to run bootstrap for each value of a0 ...</span></code></pre></div>
-<pre><code>## Time difference of 2.128083 mins</code></pre>
+<pre><code>## Time difference of 2.099717 mins</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">require</span>(ggplot2)
 res.d &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">a0=</span><span class="kw">c</span>(<span class="dv">0</span>, a_), <span class="dt">beta=</span><span class="kw">c</span>(sol<span class="op">$</span>coef, est),
                    <span class="dt">L.95=</span><span class="kw">c</span>(sol<span class="op">$</span>summary<span class="op">$</span>CI.L, CI.L), <span class="dt">U.95=</span><span class="kw">c</span>(sol<span class="op">$</span>summary<span class="op">$</span>CI.U, CI.U))

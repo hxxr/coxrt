@@ -15,7 +15,7 @@ The response is a target lifetime variable.}
 
 \item{data}{a data frame that includes the variables used in both sides of \code{formula}
 and in \code{right}.
-The observations with misssing values in one of the variables are dropped.}
+The observations with missing values in one of the variables are dropped.}
 
 \item{bs}{logical value: if \code{TRUE}, the bootstrap esimator of standard error,
 confidence interval,
@@ -29,50 +29,46 @@ The default level is 0.95.}
 }
 \value{
 A list with components:
-\tabular{ll}{
-\code{coef} \tab a vector of coefficients. \cr
-\code{var} \tab covariance matrix of regression coefficients. \cr
-\code{n} \tab the number of observations used to fit the model. \cr
-
-\code{summary} \tab a data frame with a summary of fit: \cr
-\tab
+\tabular{llr}{
+\code{coef} \tab an estimate of regression coefficients \tab   \cr
+\code{var} \tab covariance matrix of estimates of regression coefficients based on the analytic formula\tab  \cr
+\code{n} \tab the number of observations used to fit the model \tab   \cr
+\code{summary} \tab a data frame with a summary of fit: \tab  \cr}
 \itemize{
 \item{\code{coef}} a vector of coefficients
 \item{\code{exp.coef}} exponent of regression coefficients (=hazard ratio)
 \item{\code{SE}} asymptotic standard error estimate based on the analytic formula derived in Vakulenko-Lagun et al. (2018)
-\item{\code{CI.L}} lower confidence limit
-\item{\code{CI.U}} upper confidence limit
+\item{\code{CI.L}} lower confidence limit for two-sided hypothesis \ifelse{html}{\out{H<sub>0</sub>:}}{\eqn{H_0}:} \ifelse{html}{\eqn{\beta}\out{<sub>i</sub>} = 0}{\eqn{\beta_i=0}}
+\item{\code{CI.U}} upper confidence limit for two-sided hypothesis \ifelse{html}{\out{H<sub>0</sub>:}}{\eqn{H_0}:} \ifelse{html}{\eqn{\beta}\out{<sub>i</sub>} = 0}{\eqn{\beta_i=0}}
 \item{\code{pvalue}} p-value from a Wald test for a two-sided hypothesis
-\out{H<sub>0</sub>:} \eqn{\beta}\out{<sub>i</sub>} = 0
+\ifelse{html}{\out{H<sub>0</sub>:}}{\eqn{H_0}:}  \ifelse{html}{\eqn{\beta}\out{<sub>i</sub>} = 0}{\eqn{\beta_i=0}}
 \item{\code{pvalue.H1.b.gr0}} p-value from the Wald test for a one-sided
-partial hypothesis \out{H<sub>0</sub>:} \eqn{\beta}\out{<sub>i</sub>}\eqn{\le 0}
+partial hypothesis \ifelse{html}{\out{H<sub>0</sub>:}}{\eqn{H_0}:}  \ifelse{html}{\eqn{\beta}\out{<sub>i</sub>}\eqn{\le 0}}{\eqn{\beta_i\le 0}}
 based on the analytical asymptotic standard error estimate
 \item{\code{pvalue.H1.b.le0}} p-value from the Wald test a for one-sided
-partial hypothesis \out{H<sub>0</sub>:} \eqn{\beta}\out{<sub>i</sub>}\eqn{\ge 0}
-based on the analytical asymptotic standard error estimate }\cr
-
-\code{bs} \tab if the input argument \code{bs} was TRUE, then an output list also includes
-an element \code{bs} with statistics from the bootstrap distribution of estimated coefficients:\cr
-\tab \itemize{
+partial hypothesis \ifelse{html}{\out{H<sub>0</sub>:}}{\eqn{H_0}:} \ifelse{html}{\eqn{\beta}\out{<sub>i</sub>}\eqn{\ge 0}}{\eqn{\beta_i\ge 0}}
+based on the analytical asymptotic standard error estimate }
+\tabular{ll}{
+\code{bs } \tab if the input argument \code{bs} was TRUE, then an output list also includes an element \code{bs} with\cr
+ \tab statistics from the bootstrap distribution of estimated
+ coefficients:\cr}
+ \itemize{
 \item{\code{num.bs.rep}}
-number of bootsrap replications used to obtain the sample distribution
-\item{\code{var}} estimated variance
-\item{\code{summary}} a data frame with a summary
+{number of bootsrap replications used to obtain the sample distribution}
+\item{\code{var}} {estimated variance}
+\item{\code{summary}} {a data frame with a summary
 of bootstrap distribution that includes:
-
- \tabular{ll}{
- \code{SE} \tab bootstrap estimated standard error\cr
- \code{CI.L} \tab quantile estimated lower confidence limit
- for two-sided hypothesis \out{H<sub>0</sub>:} \eqn{\beta}\out{<sub>i</sub>} = 0\cr
- \code{CI.U} \tab quantile estimated upper confidence limit for two-sided hypothesis
-\out{H<sub>0</sub>:} \eqn{\beta}\out{<sub>i</sub>} = 0\cr
-\code{CI.L.H1.b.gr0} \tab
+ \code{SE}, a bootstrap estimated standard error;
+ \code{CI.L},  a quantile estimated lower confidence limit
+ for two-sided hypothesis \ifelse{html}{\out{H<sub>0</sub>:}}{\eqn{H_0}:} \ifelse{html}{\eqn{\beta}\out{<sub>i</sub>} = 0}{\eqn{\beta_i=0}};
+ \code{CI.U}, a  quantile estimated upper confidence limit for two-sided hypothesis
+\ifelse{html}{\out{H<sub>0</sub>:}}{\eqn{H_0}:}  \ifelse{html}{\eqn{\beta}\out{<sub>i</sub>} = 0}{\eqn{\beta_i=0}};
+\code{CI.L.H1.b.gr0},
+a quantile estimated the limit for one-sided hypothesis
+\ifelse{html}{\out{H<sub>0</sub>:}}{\eqn{H_0}:} \ifelse{html}{\eqn{\beta}\out{<sub>i</sub>}\eqn{\le 0}}{\eqn{\beta_i\le 0}};
+\code{CI.U.H1.b.le0}, a
 quantile estimated the limit for one-sided hypothesis
-\out{H<sub>0</sub>:} \eqn{\beta}\out{<sub>i</sub>}\eqn{\le 0}\cr
-\code{CI.U.H1.b.le0} \tab
-quantile estimated the limit for one-sided hypothesis
-\out{H<sub>0</sub>:} \eqn{\beta}\out{<sub>i</sub>}\eqn{\ge 0}\cr } } \cr
-\tab If an input argument \code{bs} was FALSE,  the return field \code{bs} will be NULL. \cr
+\ifelse{html}{\out{H<sub>0</sub>:}}{\eqn{H_0}:} \ifelse{html}{\eqn{\beta}\out{<sub>i</sub>}\eqn{\ge 0}}{\eqn{\beta_i\ge 0}}.}
 }
 }
 \description{
@@ -81,11 +77,12 @@ from right-truncated survival data assuming positivity, that is
 \code{P(lifetime>max(right) | Z=0)=0}.
 }
 \details{
-When positivity does not hold, the estimator of regression coefficients will be biased.
-But if all the covariates are uncorrelated in the population,
+When positivity does not hold, the estimator of regression coefficients
+will be biased.
+But if all the covariates are independent in the population,
 the Wald test performed by this function is still valid and can be used
 for testing partial hypotheses about regression coefficients
-even in the absence of positivity. If the covariates are correlated and
+even in the absence of positivity. If the covariates are not independent and
 positivity does not hold, the partial tests cannot guarantee the correct
 level of type I error.
 }

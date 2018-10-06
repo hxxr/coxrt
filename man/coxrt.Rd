@@ -4,7 +4,7 @@
 \name{coxrt}
 \alias{coxrt}
 \alias{coxrt-package}
-\title{coxrt: A Package to Fit the Cox Regression from Right Truncated Data.}
+\title{A Package to Fit the Cox Regression from Right Truncated Data}
 \description{
 The method assumes that truncation is independent of covariates,
 and of lifetime, and that there is no censoring.
@@ -13,7 +13,7 @@ The method uses Inverse-Probability-Weighting estimating equations with stabiliz
  Currently the code allows only time-independent covariates.
 }
 \details{
-The \code{coxrt} package provides two functions:
+The \pkg{coxrt} package provides two functions:
 \code{\link{coxph.RT}} (IPW-S) that assumes positivity
  and \code{\link{coxph.RT.a0}} (IPW-SA) that allows
  for adjustment of estimation using plugged-in \code{a0}.
@@ -24,7 +24,7 @@ The \code{coxrt} package provides two functions:
 }
 \references{
 Vakulenko-Lagun, B., Mandel, M., Betensky, R.A. Inverse-Probability-Weighting methods for Cox
-regression with right-truncated data. 2018.
+regression with right-truncated data. 2018, submitted to \emph{Biometrics}
 
 Kalbfeisch, J.D. and Lawless, J.F. Inference based on retrospective ascertainment: an analysis
 of the data on transfusion-related AIDS. Journal of the American Statistical Association,

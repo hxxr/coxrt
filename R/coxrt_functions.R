@@ -37,21 +37,21 @@
 #' from right-truncated survival data assuming positivity, that is
 #' \code{P(lifetime>max(right) | Z=0)=0}.
 #'
-#' When positivity does not hold, the estimator of regression coefficients will be biased.
-#' But if all the covariates are uncorrelated in the population,
+#' When positivity does not hold, the estimator of regression coefficients
+#' will be biased.
+#' But if all the covariates are independent in the population,
 #' the Wald test performed by this function is still valid and can be used
 #' for testing partial hypotheses about regression coefficients
-#' even in the absence of positivity. If the covariates are correlated and
+#' even in the absence of positivity. If the covariates are not independent and
 #' positivity does not hold, the partial tests cannot guarantee the correct
 #' level of type I error.
-
 #'
 #' @param formula a formula object, with the response on the left of a ~ operator, and covariates on the right.
 #' The response is a target lifetime variable.
 #' @param right a right truncation variable.
 #' @param data a data frame that includes the variables used in both sides of \code{formula}
 #' and in \code{right}.
-#' The observations with misssing values in one of the variables are dropped.
+#' The observations with missing values in one of the variables are dropped.
 #' @param bs logical value: if \code{TRUE}, the bootstrap esimator of standard error,
 #' confidence interval,
 #' and confidence upper and lower limits for one-sided confidence intervals
@@ -61,51 +61,47 @@
 #' The default level is 0.95.
 #'
 #' @return  A list with components:
-#' \tabular{ll}{
-#' \code{coef} \tab a vector of coefficients. \cr
-#' \code{var} \tab covariance matrix of regression coefficients. \cr
-#' \code{n} \tab the number of observations used to fit the model. \cr
-#'
-#' \code{summary} \tab a data frame with a summary of fit: \cr
-#' \tab
+#' \tabular{llr}{
+#' \code{coef} \tab an estimate of regression coefficients \tab   \cr
+#' \code{var} \tab covariance matrix of estimates of regression coefficients based on the analytic formula\tab  \cr
+#' \code{n} \tab the number of observations used to fit the model \tab   \cr
+#' \code{summary} \tab a data frame with a summary of fit: \tab  \cr}
 #' \itemize{
 #' \item{\code{coef}} a vector of coefficients
 #' \item{\code{exp.coef}} exponent of regression coefficients (=hazard ratio)
 #' \item{\code{SE}} asymptotic standard error estimate based on the analytic formula derived in Vakulenko-Lagun et al. (2018)
-#' \item{\code{CI.L}} lower confidence limit
-#' \item{\code{CI.U}} upper confidence limit
+#' \item{\code{CI.L}} lower confidence limit for two-sided hypothesis \ifelse{html}{\out{H<sub>0</sub>:}}{\eqn{H_0}:} \ifelse{html}{\eqn{\beta}\out{<sub>i</sub>} = 0}{\eqn{\beta_i=0}}
+#' \item{\code{CI.U}} upper confidence limit for two-sided hypothesis \ifelse{html}{\out{H<sub>0</sub>:}}{\eqn{H_0}:} \ifelse{html}{\eqn{\beta}\out{<sub>i</sub>} = 0}{\eqn{\beta_i=0}}
 #' \item{\code{pvalue}} p-value from a Wald test for a two-sided hypothesis
-#' \out{H<sub>0</sub>:} \eqn{\beta}\out{<sub>i</sub>} = 0
+#' \ifelse{html}{\out{H<sub>0</sub>:}}{\eqn{H_0}:}  \ifelse{html}{\eqn{\beta}\out{<sub>i</sub>} = 0}{\eqn{\beta_i=0}}
 #' \item{\code{pvalue.H1.b.gr0}} p-value from the Wald test for a one-sided
-#' partial hypothesis \out{H<sub>0</sub>:} \eqn{\beta}\out{<sub>i</sub>}\eqn{\le 0}
+#' partial hypothesis \ifelse{html}{\out{H<sub>0</sub>:}}{\eqn{H_0}:}  \ifelse{html}{\eqn{\beta}\out{<sub>i</sub>}\eqn{\le 0}}{\eqn{\beta_i\le 0}}
 #' based on the analytical asymptotic standard error estimate
 #' \item{\code{pvalue.H1.b.le0}} p-value from the Wald test a for one-sided
-#' partial hypothesis \out{H<sub>0</sub>:} \eqn{\beta}\out{<sub>i</sub>}\eqn{\ge 0}
-#' based on the analytical asymptotic standard error estimate }\cr
-#'
-#' \code{bs} \tab if the input argument \code{bs} was TRUE, then an output list also includes
-#' an element \code{bs} with statistics from the bootstrap distribution of estimated coefficients:\cr
-#' \tab \itemize{
+#' partial hypothesis \ifelse{html}{\out{H<sub>0</sub>:}}{\eqn{H_0}:} \ifelse{html}{\eqn{\beta}\out{<sub>i</sub>}\eqn{\ge 0}}{\eqn{\beta_i\ge 0}}
+#' based on the analytical asymptotic standard error estimate }
+#' \tabular{ll}{
+#' \code{bs } \tab if the input argument \code{bs} was TRUE, then an output list also includes an element \code{bs} with\cr
+#'  \tab statistics from the bootstrap distribution of estimated
+#'  coefficients:\cr}
+#'  \itemize{
 #' \item{\code{num.bs.rep}}
-#' number of bootsrap replications used to obtain the sample distribution
-#' \item{\code{var}} estimated variance
-#' \item{\code{summary}} a data frame with a summary
+#' {number of bootsrap replications used to obtain the sample distribution}
+#' \item{\code{var}} {estimated variance}
+#' \item{\code{summary}} {a data frame with a summary
 #' of bootstrap distribution that includes:
-#'
-#'  \tabular{ll}{
-#'  \code{SE} \tab bootstrap estimated standard error\cr
-#'  \code{CI.L} \tab quantile estimated lower confidence limit
-#'  for two-sided hypothesis \out{H<sub>0</sub>:} \eqn{\beta}\out{<sub>i</sub>} = 0\cr
-#'  \code{CI.U} \tab quantile estimated upper confidence limit for two-sided hypothesis
-#' \out{H<sub>0</sub>:} \eqn{\beta}\out{<sub>i</sub>} = 0\cr
-#' \code{CI.L.H1.b.gr0} \tab
+#'  \code{SE}, a bootstrap estimated standard error;
+#'  \code{CI.L},  a quantile estimated lower confidence limit
+#'  for two-sided hypothesis \ifelse{html}{\out{H<sub>0</sub>:}}{\eqn{H_0}:} \ifelse{html}{\eqn{\beta}\out{<sub>i</sub>} = 0}{\eqn{\beta_i=0}};
+#'  \code{CI.U}, a  quantile estimated upper confidence limit for two-sided hypothesis
+#' \ifelse{html}{\out{H<sub>0</sub>:}}{\eqn{H_0}:}  \ifelse{html}{\eqn{\beta}\out{<sub>i</sub>} = 0}{\eqn{\beta_i=0}};
+#' \code{CI.L.H1.b.gr0},
+#' a quantile estimated the limit for one-sided hypothesis
+#' \ifelse{html}{\out{H<sub>0</sub>:}}{\eqn{H_0}:} \ifelse{html}{\eqn{\beta}\out{<sub>i</sub>}\eqn{\le 0}}{\eqn{\beta_i\le 0}};
+#' \code{CI.U.H1.b.le0}, a
 #' quantile estimated the limit for one-sided hypothesis
-#' \out{H<sub>0</sub>:} \eqn{\beta}\out{<sub>i</sub>}\eqn{\le 0}\cr
-#' \code{CI.U.H1.b.le0} \tab
-#' quantile estimated the limit for one-sided hypothesis
-#' \out{H<sub>0</sub>:} \eqn{\beta}\out{<sub>i</sub>}\eqn{\ge 0}\cr } } \cr
-#' \tab If an input argument \code{bs} was FALSE,  the return field \code{bs} will be NULL. \cr
-#' }
+#' \ifelse{html}{\out{H<sub>0</sub>:}}{\eqn{H_0}:} \ifelse{html}{\eqn{\beta}\out{<sub>i</sub>}\eqn{\ge 0}}{\eqn{\beta_i\ge 0}}.}
+#'}
 #'
 #'
 #' @seealso \code{\link{coxph.RT.a0}}, \code{\link{coxrt}}, \code{\link[survival]{coxph}}
@@ -251,7 +247,7 @@ coxph.RT <- function(formula, right, data, bs=FALSE, nbs.rep=500, conf.int=0.95)
 #'   where all the covariates are zero. Right truncation might result
 #'   in a completely unobserved right tail of the distribution of the target lifetime.
 #'   That means that it can happen there will be no "representatives" in a sample
-#'   from the right tail.  Ignoring this and using \code{\link{coxph.RT}{coxph.RT}}
+#'   from the right tail.  Ignoring this and using \code{\link{coxph.RT}} in general
 #'   will result in biased estimation of regression coefficients, whereas
 #'   \code{coxph.RT.a0} allows to account for this violation.
 #'
@@ -270,40 +266,39 @@ coxph.RT <- function(formula, right, data, bs=FALSE, nbs.rep=500, conf.int=0.95)
 #'
 #' @return  a list with components:
 #' \tabular{ll}{
-#' \code{convergence} \tab convergence code as returned by \code{BBsolve{BB}}.
-#' \code{convergence} > 0 means that the algorithm diverged and a solution was not found.
-#' \code{BBsolve} is used with a default parameters setting. \cr
+#' \code{convergence} \tab convergence code as returned by \code{\link[BB:BBsolve]{BBsolve}}. \cr
+#' \tab \code{convergence} > 0 means that the algorithm diverged and a solution was not found. \cr
+#' \tab \code{BBsolve} is used with a default parameters setting. \cr
 #' \code{coef} \tab a vector of estimated regression coefficients. \cr
-#' \code{var} \tab covariance matrix of regression coefficients, if the input argument \code{bs}
-#' was \code{TRUE}; \code{NULL}, otherwise. \cr
+#' \code{var} \tab covariance matrix of regression coefficients, if the input argument \code{bs} was \code{TRUE};\cr
+#' \tab  \code{NULL}, otherwise. \cr
 #' \code{n} \tab the number of observations used to fit the model. \cr
 #' \code{a0} \tab plugged-in value of \code{a0}. \cr
-#'
-#' \code{bs} \tab if the input argument \code{bs} was TRUE, then an output list also includes
-#' an element \code{bs} with statistics from the bootstrap distribution of estimated coefficients:\cr
-#' \tab \itemize{
+#' \code{bs} \tab if the input argument \code{bs} was TRUE, then an output list also includes an element \code{bs}\cr
+#'  \tab  with statistics from the bootstrap distribution of estimated coefficients:\cr}
+#' \itemize{
 #' \item{\code{num.bs.rep}}
 #' number of successful bootsrap replications used to obtain the sample distribution
 #' \item{\code{var}} estimated variance of regression coefficients
 #' \item{\code{summary}} a data frame with a summary
 #' of bootstrap distribution that includes:
-#'
-#'  \tabular{ll}{
-#'  \code{SE} \tab bootstrap estimated standard error\cr
-#'  \code{CI.L} \tab quantile estimated lower confidence limit
-#'  for two-sided hypothesis \out{H<sub>0</sub>:} \eqn{\beta}\out{<sub>i</sub>} = 0\cr
-#'  \code{CI.U} \tab quantile estimated upper confidence limit for two-sided hypothesis
-#' \out{H<sub>0</sub>:} \eqn{\beta}\out{<sub>i</sub>} = 0\cr
-#' \code{CI.L.H1.b.gr0} \tab
+#'  \code{coef}, a vector of estimated regression coefficients;
+#'  \code{exp.coef}, an exponent of regression coefficients (=hazard ratio);
+#'  \code{SE}, a bootstrap estimated standard error;
+#'  \code{CI.L}, a quantile estimated lower confidence limit
+#'  for two-sided hypothesis \ifelse{html}{\out{H<sub>0</sub>:}}{\eqn{H_0}:} \ifelse{html}{\eqn{\beta}\out{<sub>i</sub>} = 0}{\eqn{\beta_i=0}};
+#'  \code{CI.U}, a quantile estimated upper confidence limit for two-sided hypothesis
+#' \ifelse{html}{\out{H<sub>0</sub>:}}{\eqn{H_0}:} \ifelse{html}{\eqn{\beta}\out{<sub>i</sub>} = 0}{\eqn{\beta_i=0}};
+#' \code{CI.L.H1.b.gr0}, a
 #' quantile estimated the limit for one-sided hypothesis
-#' \out{H<sub>0</sub>:} \eqn{\beta}\out{<sub>i</sub>}\eqn{\le 0}\cr
-#' \code{CI.U.H1.b.le0} \tab
+#' \ifelse{html}{\out{H<sub>0</sub>:}}{\eqn{H_0}:} \ifelse{html}{\eqn{\beta}\out{<sub>i</sub>}\eqn{\le 0}}{\eqn{\beta_i\le 0}};
+#' \code{CI.U.H1.b.le0}, a
 #' quantile estimated the limit for one-sided hypothesis
-#' \out{H<sub>0</sub>:} \eqn{\beta}\out{<sub>i</sub>}\eqn{\ge 0}\cr } } \cr
-#' \tab If an input argument \code{bs} was FALSE,  the return field \code{bs} will be NULL. \cr
-#' }
+#' \ifelse{html}{\out{H<sub>0</sub>:}}{\eqn{H_0}:} \ifelse{html}{\eqn{\beta}\out{<sub>i</sub>}\eqn{\ge 0}}{\eqn{\beta_i\ge 0}}. }
 #'
-#' @seealso \code{\link{coxph.RT}}, \code{\link[BB]{BBsolve}}
+#'
+#'
+#' @seealso \code{\link{coxph.RT}}, \code{\link[BB:BBsolve]{BBsolve}}
 #'
 #' @examples
 #' # loading AIDS data set
