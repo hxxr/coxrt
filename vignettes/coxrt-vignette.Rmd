@@ -251,7 +251,7 @@ In `coxph.RT.a0`, only the bootstrap estimator of a SE is available.
 ## Some remarks
 - Positivity cannot be tested. This assumption is based on the subject matter knowledge.
 
-- The approach assumes independence between $T$ and $R$ in the original population, which cannot be tested. However, if there is dependence between $T$ and $R$, it can be discovered by Kendall's tau test which can be done using packages [tranSurv](https://github.com/stc04003/tranSurv) or  [SurvTrunc](https://cran.r-project.org/web/packages/SurvTrunc/index.html).
+- The approach assumes independence between $T$ and $R$ in the original population, which cannot be tested. However, if there is dependence between $T$ and $R$, it can be discovered by Kendall's tau test which can be done using packages [tranSurv](https://github.com/stc04003/tranSurv) or  [SurvTrunc](https://CRAN.R-project.org/package=SurvTrunc).
 
 - If a non-terminal event of interest cannot be observed because death preceded it, that is the event of interest is **truncated by death**, the approach implemented here can be used only if two lifetimes, time to an intermediate event (=$T$) and time to death (=$R$), are independent, otherwise the results might be biased. 
 
