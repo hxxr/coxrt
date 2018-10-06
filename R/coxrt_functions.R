@@ -114,10 +114,9 @@
 #'
 #' # analysis assuming positivity
 #' # we request bootstrap SE estimate as well:
-#' sol <- coxph.RT(T~ageg, right=R, data=s, bs=TRUE, nbs.rep=300)
+#' sol <- coxph.RT(T~ageg, right=R, data=s, bs=FALSE)
 #' sol
 #' sol$summary # print the summary of fit based on the analytic Asymptotic Standard Error estimate
-#' sol$bs$summary # print the summary of fit based on the bootstrap sample distribution
 #'
 #' @export
 coxph.RT <- function(formula, right, data, bs=FALSE, nbs.rep=500, conf.int=0.95) {
@@ -308,22 +307,21 @@ coxph.RT <- function(formula, right, data, bs=FALSE, nbs.rep=500, conf.int=0.95)
 #' s$T[s$T==0] <- 0.5 # as in Kalbfeisch and Lawless (1989)
 #'
 #' # analysis using adjusted estimating equations for a0=0.2
-#' sol.02 <- try(coxph.RT.a0(T~ageg, right=R, data=s, a0=0.2, bs=TRUE, nbs.rep = 500))
+#' sol.02 <- try(coxph.RT.a0(T~ageg, right=R, data=s, a0=0.2, bs=FALSE))
 #' sol.02
 #
 #' # for a0=0
-#' # we request bootstrap SE estimate as well:
 #' sol <- try(coxph.RT(T~ageg, right=R, data=s, bs=FALSE) )
 #' sol$summary # print the summary of fit based on the asymptotic SE estimate
 #'
 #'
 #' # senstivity analysis for different values of a0
 #' a_ <- seq(0.05, 0.55, by=0.05)
-#' est <- CI.L <- CI.U <- NULL
+#' est <- NULL
 #'
 #' for(q in 1:length(a_))
 #' {
-#'   sol.a <- try(coxph.RT.a0(T~ageg, right=R, data=s, a0=a_[q], bs=TRUE))
+#'   sol.a <- try(coxph.RT.a0(T~ageg, right=R, data=s, a0=a_[q], bs=FALSE))
 #'   if (sol.a$convergence!=0)
 #'   {
 #'     cat("a0=", a_[q], ". Error occurred in BBsolve.\n")
@@ -331,16 +329,12 @@ coxph.RT <- function(formula, right, data, bs=FALSE, nbs.rep=500, conf.int=0.95)
 #'   {
 #'     cat("a=", a_[q]," ", " IPW.adj.est=", sol.a$coef, "\n")
 #'     est <- c(est, sol.a$coef)
-#'     CI.L <- c(CI.L, sol.a$bs$summary$CI.L)
-#'     CI.U <- c(CI.U, sol.a$bs$summary$CI.U)
 #'   }
 #' }
 #' require(ggplot2)
-#' res.d <- data.frame(a0=c(0, a_), beta=c(sol$coef, est),
-#'                     L.95=c(sol$summary$CI.L, CI.L), U.95=c(sol$summary$CI.U, CI.U))
+#' res.d <- data.frame(a0=c(0, a_), beta=c(sol$coef, est))
 #'
 #' p <- ggplot(res.d, aes(x=a0, y=beta)) +
-#'   geom_ribbon(aes(ymin=L.95, ymax=U.95), alpha=0.2) +
 #'   geom_line() + geom_point() +
 #'   geom_hline(yintercept=0)
 #' p + xlab(expression( paste(a[0], "=P(T>", r['*']," | z=0)" , sep="")) )+
