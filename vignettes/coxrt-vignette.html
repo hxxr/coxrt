@@ -10,9 +10,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<meta name="author" content="Bella Vakulenko-Lagun &amp; Micha Mandel &amp; Rebecca A. Betensky" />
+<meta name="author" content="Bella Vakulenko-Lagun" />
 
-<meta name="date" content="2018-10-16" />
+<meta name="date" content="2018-11-05" />
 
 <title>Cox Regression for Right Truncated Data</title>
 
@@ -69,8 +69,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 
 <h1 class="title toc-ignore">Cox Regression for Right Truncated Data</h1>
-<h4 class="author"><em><a href="https://scholar.harvard.edu/blagun">Bella Vakulenko-Lagun</a> &amp; Micha Mandel &amp; Rebecca A. Betensky</em></h4>
-<h4 class="date"><em>2018-10-16</em></h4>
+<h4 class="author"><em><a href="https://scholar.harvard.edu/blagun">Bella Vakulenko-Lagun</a></em></h4>
+<h4 class="date"><em>2018-11-05</em></h4>
 
 
 
@@ -293,7 +293,7 @@ start_time &lt;-<span class="st"> </span><span class="kw">Sys.time</span>()
 }
 end_time &lt;-<span class="st"> </span><span class="kw">Sys.time</span>()
 end_time <span class="op">-</span><span class="st"> </span>start_time <span class="co"># It takes some time to solve nonlinear estimating equations and to run bootstrap for each value of a0 ...</span></code></pre></div>
-<pre><code>## Time difference of 2.171117 mins</code></pre>
+<pre><code>## Time difference of 2.32505 mins</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">require</span>(ggplot2)
 res.d &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">a0=</span><span class="kw">c</span>(<span class="dv">0</span>, a_), <span class="dt">beta=</span><span class="kw">c</span>(sol<span class="op">$</span>coef, est),
                    <span class="dt">L.95=</span><span class="kw">c</span>(sol<span class="op">$</span>summary<span class="op">$</span>CI.L, CI.L), <span class="dt">U.95=</span><span class="kw">c</span>(sol<span class="op">$</span>summary<span class="op">$</span>CI.U, CI.U))

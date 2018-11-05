@@ -1,6 +1,6 @@
 ---
 title: "Cox Regression for Right Truncated Data"
-author: "[Bella Vakulenko-Lagun](https://scholar.harvard.edu/blagun) & Micha Mandel & Rebecca A. Betensky"
+author: "[Bella Vakulenko-Lagun](https://scholar.harvard.edu/blagun)"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 bibliography: references.bib
