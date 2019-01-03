@@ -32,7 +32,7 @@ arma::mat getGamma(const arma::vec expbZ, const arma::vec X, const arma::vec T,
         S2_i(hc,hr)=S2_i(hr,hc);
         S1S1(hr,hc)=S1_i(hr) * S1_i(hc);
         S1S1(hc,hr)= S1S1(hr,hc);
-        Gamma(hr,hc)=Gamma(hr,hc)+S2_i(hr,hc)/S0_i - S1S1(hr,hc)/pow(S0_i,2);
+        Gamma(hr,hc)=Gamma(hr,hc)+S2_i(hr,hc)/S0_i - S1S1(hr,hc)/std::pow(S0_i,2);
         Gamma(hc,hr)=Gamma(hr,hc);
       }
     }
@@ -79,7 +79,7 @@ arma::mat getSigma_cpp(const arma::mat Z, const arma::mat TMP, const arma::vec S
       }
     }
 
-    iid=iid+a/pow(m,2);
+    iid=iid+a/std::pow(m,2);
     Sigma = Sigma + iid.t() * iid;
   } // ii loop
 
@@ -132,8 +132,8 @@ arma::mat getVar(const arma::vec exp_bZ, const arma::vec X, const arma::vec T, c
   xi=(Ri<=Tk)/Qk;
   for (int q = 0; q < m; q++)
   {
-    C = C + as<arma::mat>(wrap((Ti <= T(q)) % (T(q)<= Ri) % (T(q)<=Tk)))/pow(Q_atR_v(q),2);
-    B = B + as<arma::mat>(wrap((Ri <= X(q)) % (X(q)<= Tk)))/pow(Q_atT_v(q),2) - as<arma::mat>(wrap((Ri <= T(q)) % (T(q)<= Tk)))/pow(Q_atR_v(q),2);
+    C = C + as<arma::mat>(wrap((Ti <= T(q)) % (T(q)<= Ri) % (T(q)<=Tk)))/std::pow(Q_atR_v(q),2);
+    B = B + as<arma::mat>(wrap((Ri <= X(q)) % (X(q)<= Tk)))/std::pow(Q_atT_v(q),2) - as<arma::mat>(wrap((Ri <= T(q)) % (T(q)<= Tk)))/std::pow(Q_atR_v(q),2);
   }
   xi = xi + (B-C)/m;
 
