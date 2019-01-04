@@ -79,7 +79,7 @@ arma::mat getSigma_cpp(const arma::mat Z, const arma::mat TMP, const arma::vec S
       }
     }
 
-    iid=iid+a/std::pow(m,2);
+    iid=iid+a/std::pow((double)m,2);
     Sigma = Sigma + iid.t() * iid;
   } // ii loop
 
