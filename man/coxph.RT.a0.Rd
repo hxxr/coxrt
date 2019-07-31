@@ -76,8 +76,9 @@ right truncated survival data for a given value of \code{a0=P(lifetime>max(right
 # loading AIDS data set
 library(gss)
 data(aids)
-s <- data.frame(age=aids$age, ageg=as.numeric(aids$age<=4), T=aids$incu, R=aids$infe)
-s$T[s$T==0] <- 0.5 # as in Kalbfeisch and Lawless (1989)
+all <- data.frame(age=aids$age, ageg=as.numeric(aids$age<=59), T=aids$incu, R=aids$infe, hiv.mon =102-aids$infe)
+all$T[all$T==0] <- 0.5 # as in Kalbfeisch and Lawless (1989)
+s <- all[all$hiv.mon>60,] # select those who were infected in 1983 or later
 
 # analysis using adjusted estimating equations for a0=0.2
 sol.02 <- try(coxph.RT.a0(T~ageg, right=R, data=s, a0=0.2, bs=FALSE))
@@ -87,7 +88,7 @@ sol <- try(coxph.RT(T~ageg, right=R, data=s, bs=FALSE) )
 sol$summary # print the summary of fit based on the asymptotic SE estimate
 
 
-# senstivity analysis for different values of a0
+# sensitivity analysis for different values of a0
 a_ <- seq(0.05, 0.55, by=0.05)
 est <- NULL
 

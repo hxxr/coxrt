@@ -90,9 +90,9 @@ level of type I error.
 # loading AIDS data set
 library(gss)
 data(aids)
-s <- data.frame(age=aids$age, ageg=as.numeric(aids$age<=4), T=aids$incu, R=aids$infe)
-s$T[s$T==0] <- 0.5 # as in Kalbfeisch and Lawless (1989)
-
+all <- data.frame(age=aids$age, ageg=as.numeric(aids$age<=59), T=aids$incu, R=aids$infe, hiv.mon =102-aids$infe)
+all$T[all$T==0] <- 0.5 # as in Kalbfeisch and Lawless (1989)
+s <- all[all$hiv.mon>60,] # select those who were infected in 1983 or later
 # analysis assuming positivity
 # we request bootstrap SE estimate as well:
 sol <- coxph.RT(T~ageg, right=R, data=s, bs=FALSE)

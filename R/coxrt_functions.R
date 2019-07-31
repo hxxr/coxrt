@@ -109,9 +109,9 @@
 #' # loading AIDS data set
 #' library(gss)
 #' data(aids)
-#' s <- data.frame(age=aids$age, ageg=as.numeric(aids$age<=4), T=aids$incu, R=aids$infe)
-#' s$T[s$T==0] <- 0.5 # as in Kalbfeisch and Lawless (1989)
-#'
+#' all <- data.frame(age=aids$age, ageg=as.numeric(aids$age<=59), T=aids$incu, R=aids$infe, hiv.mon =102-aids$infe)
+#' all$T[all$T==0] <- 0.5 # as in Kalbfeisch and Lawless (1989)
+#' s <- all[all$hiv.mon>60,] # select those who were infected in 1983 or later
 #' # analysis assuming positivity
 #' # we request bootstrap SE estimate as well:
 #' sol <- coxph.RT(T~ageg, right=R, data=s, bs=FALSE)
@@ -303,8 +303,9 @@ coxph.RT <- function(formula, right, data, bs=FALSE, nbs.rep=500, conf.int=0.95)
 #' # loading AIDS data set
 #' library(gss)
 #' data(aids)
-#' s <- data.frame(age=aids$age, ageg=as.numeric(aids$age<=4), T=aids$incu, R=aids$infe)
-#' s$T[s$T==0] <- 0.5 # as in Kalbfeisch and Lawless (1989)
+#' all <- data.frame(age=aids$age, ageg=as.numeric(aids$age<=59), T=aids$incu, R=aids$infe, hiv.mon =102-aids$infe)
+#' all$T[all$T==0] <- 0.5 # as in Kalbfeisch and Lawless (1989)
+#' s <- all[all$hiv.mon>60,] # select those who were infected in 1983 or later
 #'
 #' # analysis using adjusted estimating equations for a0=0.2
 #' sol.02 <- try(coxph.RT.a0(T~ageg, right=R, data=s, a0=0.2, bs=FALSE))
@@ -315,7 +316,7 @@ coxph.RT <- function(formula, right, data, bs=FALSE, nbs.rep=500, conf.int=0.95)
 #' sol$summary # print the summary of fit based on the asymptotic SE estimate
 #'
 #'
-#' # senstivity analysis for different values of a0
+#' # sensitivity analysis for different values of a0
 #' a_ <- seq(0.05, 0.55, by=0.05)
 #' est <- NULL
 #'
@@ -404,7 +405,7 @@ coxph.RT.a0 <-function(formula, right, data, a0=0, bs=FALSE, nbs.rep=200, conf.i
   sol.a0 <- try(BBsolve(par=sol$coef, fn=.EE.RT, T=X, Z=Z, R=T, a0=a0, W=w.simple, quiet=TRUE))
   if (sol.a0$convergence!=0)
   {
-    cat("RT sensitivity: Error occurred in BBsolve for a0=",a0, "\n")
+    cat("RT sensitivity: Error occurred in BBsolve for a0=",a0 , "\n")
     out$convergence <- sol.a0$convergence
     return(out)
   }
@@ -435,7 +436,8 @@ coxph.RT.a0 <-function(formula, right, data, a0=0, bs=FALSE, nbs.rep=200, conf.i
                            R=T[samp.b], a0=a0, W=re.w.simple, quiet = TRUE))
       if (class(sol.b)!="list" || sol.b$convergence!=0)
       {
-        cat("bs rep=", b, "Error occurred in BBsolve. " , sol.b, "\n")
+        cat("bs rep=", b, "Error occurred in BBsolve. " , "\n")
+        next
       }
       else
       {

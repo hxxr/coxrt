@@ -23,8 +23,7 @@ The \pkg{coxrt} package provides two functions:
  included in the analysis (Kalbfeisch and Lawless, 1989).
 }
 \references{
-Vakulenko-Lagun, B., Mandel, M., Betensky, R.A. Inverse-Probability-Weighting methods for Cox
-regression with right-truncated data. 2018, submitted to \emph{Biometrics}
+Vakulenko-Lagun, B., Mandel, M., Betensky, R.A. Inverse probability weighting methods for Cox regression with right-truncated data. 2019, submitted to \emph{Biometrics}
 
 Kalbfeisch, J.D. and Lawless, J.F. Inference based on retrospective ascertainment: an analysis
 of the data on transfusion-related AIDS. Journal of the American Statistical Association,
