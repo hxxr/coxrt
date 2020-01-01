@@ -2,6 +2,7 @@
 
 export(coxph.RT)
 export(coxph.RT.a0)
+import(Rcpp)
 import(BB)
 import(ggplot2)
 import(gss)
